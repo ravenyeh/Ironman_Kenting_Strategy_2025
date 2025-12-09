@@ -3,261 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IRONMAN 70.3 Kenting 2024 - Male 40-49歲組配速分析與策略建議</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>IM703 四位選手能力分析對比</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: linear-gradient(135deg, #2C3E50 0%, #3498DB 100%);
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            color: #d4af37;
             min-height: 100vh;
+            padding: 20px;
         }
-
+        
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            overflow: hidden;
         }
-
-        .header {
-            background: linear-gradient(135deg, #E74C3C 0%, #C0392B 100%);
-            color: white;
+        
+        header {
             text-align: center;
-            padding: 30px;
+            margin-bottom: 40px;
+            padding: 40px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid #d4af37;
+            border-radius: 10px;
         }
-
-        .header h1 {
-            margin: 0;
-            font-size: 2.5em;
-            font-weight: 300;
+        
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
         }
-
-        .header p {
-            margin: 10px 0 0 0;
-            font-size: 1.2em;
+        
+        .subtitle {
+            font-size: 1.3em;
             opacity: 0.9;
-        }
-
-        .tabs {
-            display: flex;
-            background: #f8f9fa;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 15px;
-            text-align: center;
-            cursor: pointer;
-            border: none;
-            background: none;
-            font-size: 16px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .tab:hover {
-            background: #e9ecef;
-        }
-
-        .tab.active {
-            background: #E74C3C;
-            color: white;
-        }
-
-        .tab-content {
-            display: none;
-            padding: 30px;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #3498DB 0%, #2980B9 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2.2em;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-
-        .stat-label {
-            font-size: 1em;
-            opacity: 0.9;
-        }
-
-        .chart-container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin: 20px 0;
-        }
-
-        .performance-section {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
-            padding: 25px;
-            margin: 20px 0;
-        }
-
-        .section-title {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #2C3E50;
-            margin-bottom: 20px;
-            border-bottom: 3px solid #E74C3C;
-            padding-bottom: 10px;
-        }
-
-        .strategy-card {
-            background: linear-gradient(135deg, #27AE60 0%, #229954 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 10px;
             margin: 15px 0;
         }
-
-        .strategy-title {
-            font-size: 1.3em;
+        
+        .section {
+            background: rgba(212, 175, 55, 0.05);
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+        }
+        
+        .section h2 {
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #d4af37;
+            color: #ffed4e;
+        }
+        
+        .athletes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .athlete-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .athlete-card:hover {
+            background: rgba(212, 175, 55, 0.15);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        .athlete-header {
+            font-size: 1.4em;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            color: #ffed4e;
+        }
+        
+        .athlete-info {
+            font-size: 0.95em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .info-row {
+            margin: 8px 0;
             display: flex;
-            align-items: center;
+            justify-content: space-between;
         }
-
-        .strategy-content {
-            background: rgba(255,255,255,0.1);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
+        
+        .info-label {
+            opacity: 0.8;
         }
-
-        .pacing-table {
+        
+        .info-value {
+            color: #ffffff;
+            font-weight: bold;
+        }
+        
+        .comparison-table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-size: 0.95em;
         }
-
-        .pacing-table th,
-        .pacing-table td {
-            padding: 12px 15px;
+        
+        .comparison-table th {
+            background: rgba(212, 175, 55, 0.2);
+            color: #ffed4e;
+            padding: 12px;
             text-align: left;
-            border-bottom: 1px solid #dee2e6;
+            border: 1px solid #d4af37;
         }
-
-        .pacing-table th {
-            background: #E74C3C;
-            color: white;
-            font-weight: bold;
+        
+        .comparison-table td {
+            padding: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
         }
-
-        .pacing-table tr:hover {
-            background: #f8f9fa;
+        
+        .comparison-table tr:nth-child(even) {
+            background: rgba(0, 0, 0, 0.2);
         }
-
-        .pace-fast { background: #d4edda; color: #155724; }
-        .pace-moderate { background: #fff3cd; color: #856404; }
-        .pace-conservative { background: #f8d7da; color: #721c24; }
-
-        .decline-analysis {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin: 25px 0;
+        
+        .rank-1 { background: rgba(212, 175, 55, 0.3) !important; }
+        .rank-2 { background: rgba(100, 100, 100, 0.3) !important; }
+        .rank-3 { background: rgba(150, 100, 50, 0.3) !important; }
+        .rank-4 { background: rgba(0, 0, 0, 0.5) !important; }
+        
+        .ability-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+            font-size: 0.9em;
         }
-
-        .decline-card {
-            background: white;
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        
+        .bar-label {
+            width: 80px;
+            opacity: 0.8;
         }
-
-        .warning-box {
-            background: linear-gradient(135deg, #F39C12 0%, #E67E22 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
+        
+        .bar-container {
+            flex: 1;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid #d4af37;
         }
-
-        .tip-box {
-            background: linear-gradient(135deg, #8E44AD 0%, #7D3C98 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-
-        .athlete-performance {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .athlete-card {
-            background: white;
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .athlete-name {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #E74C3C;
-            margin-bottom: 10px;
-        }
-
-        .time-badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 12px;
+        
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #d4af37, #ffed4e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 0.8em;
+            color: #000;
             font-weight: bold;
-            margin: 2px;
         }
-
-        .excellent-time { background: #28a745; color: white; }
-        .good-time { background: #17a2b8; color: white; }
-        .average-time { background: #ffc107; color: #333; }
-        .slow-time { background: #dc3545; color: white; }
-
-        @media (max-width: 768px) {
-            .tabs {
-                flex-direction: column;
-            }
-            .decline-analysis {
+        
+        .insight-box {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .insight-item {
+            margin: 12px 0 12px 20px;
+            position: relative;
+        }
+        
+        .insight-item::before {
+            content: '•';
+            position: absolute;
+            left: -15px;
+            color: #d4af37;
+            font-weight: bold;
+        }
+        
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .grid-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #d4af37;
+        }
+        
+        .grid-item-title {
+            color: #ffed4e;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .grid-item-content {
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 1200px) {
+            .athletes-grid {
                 grid-template-columns: 1fr;
             }
-            .stats-grid {
+            .grid-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            .grid-4 {
                 grid-template-columns: 1fr;
             }
         }
@@ -265,720 +239,345 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>IRONMAN 70.3 Kenting 2024</h1>
-            <p>Male 40-49歲組配速分析與比賽策略建議</p>
-        </div>
-
-        <div class="tabs">
-            <button class="tab active" onclick="showTab('overview')">整體表現</button>
-            <button class="tab" onclick="showTab('pacing')">配速分析</button>
-            <button class="tab" onclick="showTab('strategy')">比賽策略</button>
-            <button class="tab" onclick="showTab('athletes')">標竿選手</button>
-        </div>
-
-        <!-- 整體表現標籤 -->
-        <div id="overview" class="tab-content active">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-label">完整分析樣本</div>
-                    <div class="stat-number">485</div>
-                    <div class="stat-label">位選手 (402位完賽)</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">平均完賽時間</div>
-                    <div class="stat-number">6:29:41</div>
-                    <div class="stat-label">中位數: 6:28:25</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">最佳表現</div>
-                    <div class="stat-number">4:19:59</div>
-                    <div class="stat-label">Jen Mao HSU</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">年齡組分布</div>
-                    <div class="stat-number">40-44: 224人<br>45-49: 261人</div>
-                    <div class="stat-label">完整數據集</div>
-                </div>
-            </div>
-
-            <div class="chart-container">
-                <h3>分段時間分布分析</h3>
-                <canvas id="overviewChart"></canvas>
-            </div>
-
-            <div class="performance-section">
-                <div class="section-title">📊 完賽時間分布分析 (485位選手)</div>
-                <div class="decline-analysis">
-                    <div class="decline-card">
-                        <h4>時間分布統計</h4>
-                        <p><strong>4:30-5:00：</strong>21人 (5.2%) - 頂級表現</p>
-                        <p><strong>5:00-5:30：</strong>37人 (9.2%) - 優秀表現</p>
-                        <p><strong>5:30-6:00：</strong>65人 (16.2%) - 良好表現</p>
-                        <p><strong>6:00-6:30：</strong>82人 (20.4%) - 平均表現</p>
-                        <p><strong>6:30-7:00：</strong>71人 (17.7%) - 一般表現</p>
-                        <p><strong>7:00+：</strong>125人 (31.1%) - 完賽導向</p>
-                    </div>
-                    <div class="decline-card">
-                        <h4>目標設定建議</h4>
-                        <p><strong>挑戰目標：</strong>5:30以內 (前30%)</p>
-                        <p><strong>現實目標：</strong>6:00-6:30 (中段表現)</p>
-                        <p><strong>保守目標：</strong>7:00以內 (穩定完賽)</p>
-                        <p><strong>平均完賽：</strong>6:29:41</p>
-                        <p><strong>中位數：</strong>6:28:25</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="performance-section">
-                <div class="section-title">🏊‍♂️ 游泳段表現分析 (432位完成數據)</div>
-                <div class="warning-box">
-                    <h4>⚠️ 重要：2024年賽事特殊情況</h4>
-                    <p><strong>因海況不佳，游泳距離縮短為950米 (原本1900米)</strong></p>
-                    <p>距離減少50%，大幅影響游泳時間和配速計算</p>
-                </div>
-                <div class="decline-analysis">
-                    <div class="decline-card">
-                        <h4>950米游泳真實數據</h4>
-                        <p><strong>平均時間：</strong>23:15 (2:27/100m)</p>
-                        <p><strong>中位數：</strong>23:03 (2:26/100m)</p>
-                        <p><strong>最快：</strong>14:48 (1:34/100m)</p>
-                        <p><strong>節省時間：</strong>約11:31 (相比正常距離)</p>
-                    </div>
-                    <div class="decline-card">
-                        <h4>950米配速策略建議</h4>
-                        <p><strong>積極：</strong>20:55 (2:12/100m) - 前25%</p>
-                        <p><strong>穩健：</strong>23:03 (2:26/100m) - 中位數</p>
-                        <p><strong>保守：</strong>25:11 (2:39/100m) - 後25%</p>
-                        <p><strong>重點：</strong>短距離可稍微提高配速</p>
-                    </div>
-                </div>
-                <div class="tip-box">
-                    <h4>💡 標準1900米推算配速</h4>
-                    <p><strong>積極策略：</strong>41:50 (2:12/100m)</p>
-                    <p><strong>穩健策略：</strong>46:07 (2:26/100m)</p>
-                    <p><strong>保守策略：</strong>50:22 (2:39/100m)</p>
-                    <p><em>* 基於950米表現推算的標準距離參考</em></p>
-                </div>
-            </div>
-
-            <div class="performance-section">
-                <div class="section-title">🚴‍♂️ 騎車段表現分析 (426位完成數據)</div>
-                <div class="decline-analysis">
-                    <div class="decline-card">
-                        <h4>真實數據統計</h4>
-                        <p><strong>平均時間：</strong>3:00:04 (30.0 km/h)</p>
-                        <p><strong>中位數：</strong>2:57:07 (30.5 km/h)</p>
-                        <p><strong>最快：</strong>2:10:52* (41.3 km/h)</p>
-                        <p><strong>現實目標：</strong>2:45-3:15 較為合理</p>
-                    </div>
-                    <div class="decline-card">
-                        <h4>配速策略建議</h4>
-                        <p><strong>積極：</strong>2:43:40 (33.0 km/h) - 前25%</p>
-                        <p><strong>穩健：</strong>2:57:07 (30.5 km/h) - 中位數</p>
-                        <p><strong>保守：</strong>3:14:02 (27.8 km/h) - 後25%</p>
-                        <p><strong>重點：</strong>保留體力給跑步段</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="performance-section">
-                <div class="section-title">🏃‍♂️ 跑步段表現分析 (402位完成數據)</div>
-                <div class="decline-analysis">
-                    <div class="decline-card">
-                        <h4>真實數據統計</h4>
-                        <p><strong>平均時間：</strong>2:50:38 (8:04/km)</p>
-                        <p><strong>中位數：</strong>2:48:55 (8:00/km)</p>
-                        <p><strong>最快：</strong>1:36:35 (4:34/km)</p>
-                        <p><strong>現實目標：</strong>2:30-3:00 較為合理</p>
-                    </div>
-                    <div class="decline-card">
-                        <h4>配速策略建議</h4>
-                        <p><strong>積極：</strong>2:27:27 (6:59/km) - 前25%</p>
-                        <p><strong>穩健：</strong>2:48:55 (8:00/km) - 中位數</p>
-                        <p><strong>保守：</strong>3:14:38 (9:12/km) - 後25%</p>
-                        <p><strong>重點：</strong>前段保守，後段視體力調整</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="warning-box">
-                <h3>⚠️ 基於485位真實數據的重要發現</h3>
-                <p><strong>特殊賽況：</strong>2024年因海況不佳，游泳距離縮短為950米 (原1900米)</p>
-                <p><strong>時間影響：</strong>游泳縮短約節省11:31，但實際完賽時間仍平均6:29:41</p>
-                <p><strong>完賽率：</strong>485位選手中402位完賽 (82.9%)，顯示比賽仍具挑戰性</p>
-                <p><strong>時間分布：</strong>即使游泳縮短，68.9%選手仍需6小時以上完賽</p>
-                <p><strong>配速現實：</strong>騎車和跑步段是決定完賽時間的關鍵，游泳影響有限</p>
-            </div>
-
-            <div class="tip-box">
-                <h3>💡 標準賽事配速預估</h3>
-                <p><strong>基於950米推算標準1900米賽事：</strong></p>
-                <p><strong>預估完賽時間：</strong>6:41:12 (平均增加11:31)</p>
-                <p><strong>游泳目標：</strong>41:50-50:22 (2:12-2:39/100m)</p>
-                <p><strong>騎車目標：</strong>2:57:07 (30.5 km/h，中位數表現)</p>
-                <p><strong>跑步目標：</strong>2:48:55 (8:00/km，中位數表現)</p>
-            </div>
-        </div>
-
-        <!-- 配速分析標籤 -->
-        <div id="pacing" class="tab-content">
-            <div class="section-title">📊 詳細配速建議表</div>
-
-            <table class="pacing-table">
+        <header>
+            <h1>🏆 IM703 全程鐵人三項賽</h1>
+            <p class="subtitle">四位選手能力分析對比</p>
+            <p style="margin-top: 20px; opacity: 0.8;">2025年11月 | 1614 / 1919 / 1359 / 1173</p>
+        </header>
+        
+        <!-- 基本信息對比 -->
+        <div class="section">
+            <h2>📋 基本信息 & 整體排名</h2>
+            
+            <table class="comparison-table">
                 <thead>
                     <tr>
-                        <th>項目</th>
-                        <th>距離/時間</th>
-                        <th>保守策略</th>
-                        <th>積極策略</th>
-                        <th>建議配速</th>
-                        <th>注意事項</th>
+                        <th>選手</th>
+                        <th>年齡組</th>
+                        <th>總成績</th>
+                        <th>排名</th>
+                        <th>特徵</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td rowspan="3"><strong>🏊‍♂️ 游泳</strong></td>
-                        <td>950m (2024實際)</td>
-                        <td class="pace-conservative">25:11+ (2:39/100m)</td>
-                        <td class="pace-fast">20:55 (2:12/100m)</td>
-                        <td class="pace-moderate">23:03 (2:26/100m)</td>
-                        <td>基於實際縮短距離</td>
+                    <tr class="rank-1">
+                        <td style="font-weight: bold; color: #ffed4e;">葉烜宏 (1614)</td>
+                        <td>40-44</td>
+                        <td style="font-weight: bold;">06:00:39</td>
+                        <td><strong>30</strong></td>
+                        <td>跑步爆表 + 過渡頂級</td>
                     </tr>
-                    <tr>
-                        <td>1.9km (標準距離)</td>
-                        <td class="pace-conservative">50:22+ (2:39/100m)</td>
-                        <td class="pace-fast">41:50 (2:12/100m)</td>
-                        <td class="pace-moderate">46:07 (2:26/100m)</td>
-                        <td>推算標準距離配速</td>
+                    <tr class="rank-2">
+                        <td style="font-weight: bold; color: #ffed4e;">陳威仲 (1919)</td>
+                        <td>50-54</td>
+                        <td style="font-weight: bold;">06:21:22</td>
+                        <td><strong>32</strong></td>
+                        <td>游泳+騎車雙強</td>
                     </tr>
-                    <tr>
-                        <td>T1轉換</td>
-                        <td colspan="3" class="pace-moderate">目標：4-5分鐘</td>
-                        <td>練習轉換流程</td>
+                    <tr class="rank-3">
+                        <td style="font-weight: bold; color: #ffed4e;">吳家慶 (1359)</td>
+                        <td>35-39</td>
+                        <td style="font-weight: bold;">06:26:53</td>
+                        <td><strong>42</strong></td>
+                        <td>游泳+騎車王牌</td>
                     </tr>
-                    <tr>
-                        <td rowspan="5"><strong>🚴‍♂️ 騎車</strong></td>
-                        <td>整體90km</td>
-                        <td class="pace-conservative">3:14:00 (128W平均)</td>
-                        <td class="pace-fast">2:43:00 (146W平均)</td>
-                        <td class="pace-moderate">2:57:00 (134W平均)</td>
-                        <td>基於FTP 195W個人化配置</td>
-                    </tr>
-                    <tr>
-                        <td>前30km</td>
-                        <td class="pace-conservative">126-130W (65-67% FTP)</td>
-                        <td class="pace-fast">132-136W (68-70% FTP)</td>
-                        <td class="pace-moderate">128-132W (66-68% FTP)</td>
-                        <td>保守起步，建立節奏</td>
-                    </tr>
-                    <tr>
-                        <td>中30km</td>
-                        <td class="pace-conservative">136-140W (70-72% FTP)</td>
-                        <td class="pace-fast">140-146W (72-75% FTP)</td>
-                        <td class="pace-moderate">136-142W (70-73% FTP)</td>
-                        <td>主要工作段，穩定輸出</td>
-                    </tr>
-                    <tr>
-                        <td>後30km</td>
-                        <td class="pace-conservative">120-126W (62-65% FTP)</td>
-                        <td class="pace-fast">126-136W (65-70% FTP)</td>
-                        <td class="pace-moderate">124-130W (64-67% FTP)</td>
-                        <td>為跑步保留體力</td>
-                    </tr>
-                    <tr>
-                        <td>T2轉換</td>
-                        <td colspan="3" class="pace-moderate">目標：3-4分鐘</td>
-                        <td>慢慢適應跑步節奏</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="5"><strong>🏃‍♂️ 跑步</strong></td>
-                        <td>整體21.1km (個人化)</td>
-                        <td class="pace-conservative">2:05:38 (5:57/km)</td>
-                        <td class="pace-fast">1:55:35 (5:28/km)</td>
-                        <td class="pace-moderate">2:00:37 (5:42/km)</td>
-                        <td>基於全馬3:00/半馬1:32能力</td>
-                    </tr>
-                    <tr>
-                        <td>前4km (6%上坡)</td>
-                        <td class="pace-conservative">7:21/km (29:26)</td>
-                        <td class="pace-fast">6:46/km (27:04)</td>
-                        <td class="pace-moderate">7:03/km (28:15)</td>
-                        <td>接受配速明顯放緩</td>
-                    </tr>
-                    <tr>
-                        <td>中11km (平路)</td>
-                        <td class="pace-conservative">5:43/km (62:57)</td>
-                        <td class="pace-fast">5:15/km (57:55)</td>
-                        <td class="pace-moderate">5:29/km (60:26)</td>
-                        <td>找回節奏，穩定推進</td>
-                    </tr>
-                    <tr>
-                        <td>後6.1km (平路/下坡)</td>
-                        <td class="pace-conservative">5:27/km (33:15)</td>
-                        <td class="pace-fast">5:00/km (30:35)</td>
-                        <td class="pace-moderate">5:13/km (31:55)</td>
-                        <td>視體力狀況決定策略</td>
-                    </tr>
-                    <tr>
-                        <td>vs 賽事數據對比</td>
-                        <td colspan="3" class="pace-moderate">你的目標 2:00:37 約為賽事前15%表現</td>
-                        <td>遠超平均表現 (2:48:55)</td>
+                    <tr class="rank-4">
+                        <td style="font-weight: bold; color: #ffed4e;">潘美如 (1173)</td>
+                        <td>50-54</td>
+                        <td style="font-weight: bold;">06:49:50</td>
+                        <td><strong>2*</strong></td>
+                        <td>分齡排名2（女性50-54）</td>
                     </tr>
                 </tbody>
             </table>
-
-            <div class="chart-container">
-                <h3>分段配速趨勢分析</h3>
-                <canvas id="pacingChart"></canvas>
+        </div>
+        
+        <!-- 四位選手詳細卡片 -->
+        <div class="section">
+            <h2>🔍 四位選手詳細分析</h2>
+            
+            <div class="athletes-grid">
+                <!-- 葉烜宏 -->
+                <div class="athlete-card" style="border-color: #ffed4e;">
+                    <div class="athlete-header">⭐ 葉烜宏 (1614) - 40-44歲</div>
+                    <div class="athlete-info">
+                        <div class="info-row">
+                            <span class="info-label">總成績:</span>
+                            <span class="info-value">06:00:39 (排名30)</span>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <div style="color: #4ade80; font-weight: bold; margin-bottom: 10px;">✅ 王牌能力</div>
+                        <div class="ability-bar">
+                            <span class="bar-label">跑步</span>
+                            <div class="bar-container"><div class="bar-fill" style="width: 95%;">05:37</div></div>
+                        </div>
+                        <div class="ability-bar">
+                            <span class="bar-label">過渡</span>
+                            <div class="bar-container"><div class="bar-fill" style="width: 100%;">07:51</div></div>
+                        </div>
+                    </div>
+                    
+                    <div style="font-size: 0.9em; line-height: 1.7;">
+                        <p><strong>💡 能力特徵：</strong></p>
+                        <ul style="margin-left: 15px;">
+                            <li>跑步全隊最強 (05:37/km)</li>
+                            <li>過渡效率業界頂級</li>
+                            <li>領先次名2分34秒!</li>
+                            <li>典型"跑步爆表型"選手</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 陳威仲 -->
+                <div class="athlete-card" style="border-color: #c0c0c0;">
+                    <div class="athlete-header">💪 陳威仲 (1919) - 50-54歲</div>
+                    <div class="athlete-info">
+                        <div class="info-row">
+                            <span class="info-label">總成績:</span>
+                            <span class="info-value">06:21:22 (排名32)</span>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <div style="color: #4ade80; font-weight: bold; margin-bottom: 10px;">✅ 雙重優勢</div>
+                        <div class="ability-bar">
+                            <span class="bar-label">游泳</span>
+                            <div class="bar-container"><div class="bar-fill" style="width: 85%;">02:42</div></div>
+                        </div>
+                        <div class="ability-bar">
+                            <span class="bar-label">騎車</span>
+                            <div class="bar-container"><div class="bar-fill" style="width: 88%;">30.42</div></div>
+                        </div>
+                    </div>
+                    
+                    <div style="font-size: 0.9em; line-height: 1.7;">
+                        <p><strong>💡 能力特徵：</strong></p>
+                        <ul style="margin-left: 15px;">
+                            <li>典型"均衡型"選手</li>
+                            <li>游泳+騎車雙強</li>
+                            <li>50歲排32超越30+歲的吳</li>
+                            <li>長距離最有利</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 吳家慶 -->
+                <div class="athlete-card" style="border-color: #cd7f32;">
+                    <div class="athlete-header">🌟 吳家慶 (1359) - 35-39歲</div>
+                    <div class="athlete-info">
+                        <div class="info-row">
+                            <span class="info-label">總成績:</span>
+                            <span class="info-value">06:26:53 (排名42)</span>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <div style="color: #ffed4e; font-weight: bold; margin-bottom: 10px;">⚠️ 極端分佈</div>
+                        <div class="ability-bar">
+                            <span class="bar-label">游泳</span>
+                            <div class="bar-container"><div class="bar-fill" style="width: 100%;">02:23</div></div>
+                        </div>
+                        <div class="ability-bar">
+                            <span class="bar-label">騎車</span>
+                            <div class="bar-container"><div class="bar-fill" style="width: 100%;">32.18</div></div>
+                        </div>
+                        <div class="ability-bar">
+                            <span class="bar-label">跑步</span>
+                            <div class="bar-container"><div class="bar-fill" style="width: 55%;">07:38</div></div>
+                        </div>
+                    </div>
+                    
+                    <div style="font-size: 0.9em; line-height: 1.7;">
+                        <p><strong>💡 能力特徵：</strong></p>
+                        <ul style="margin-left: 15px;">
+                            <li>游泳+騎車全隊最強</li>
+                            <li>跑步全隊最慢(7:38)</li>
+                            <li>過渡時間拖累(13:18)</li>
+                            <li>改進潛力最大(+5-8min)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 潘美如 -->
+                <div class="athlete-card" style="border-color: #666;">
+                    <div class="athlete-header">📊 潘美如 (1173) - 50-54歲</div>
+                    <div class="athlete-info">
+                        <div class="info-row">
+                            <span class="info-label">總成績:</span>
+                            <span class="info-value">06:49:50 (分齡排2)</span>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <div style="color: #ff6b6b; font-weight: bold; margin-bottom: 10px;">⚠️ 最弱表現</div>
+                        <div class="ability-bar">
+                            <span class="bar-label">騎車</span>
+                            <div class="bar-container"><div class="bar-fill" style="width: 65%;">25.14</div></div>
+                        </div>
+                        <div class="ability-bar">
+                            <span class="bar-label">過渡</span>
+                            <div class="bar-container"><div class="bar-fill" style="width: 55%;">14:10</div></div>
+                        </div>
+                    </div>
+                    
+                    <div style="font-size: 0.9em; line-height: 1.7;">
+                        <p><strong>💡 能力特徵：</strong></p>
+                        <ul style="margin-left: 15px;">
+                            <li>騎車全隊最慢(25.14km/h)</li>
+                            <li>過渡最長(14:10,慢6分)</li>
+                            <li>排名2因為是分齡女性排名</li>
+                            <li>改進空間最大但難度高</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <!-- 比賽策略標籤 -->
-        <div id="strategy" class="tab-content">
-            <div class="strategy-card">
-                <div class="strategy-title">🎯 比賽前準備策略 (基於FTP 195W)</div>
-                <div class="strategy-content">
-                    <strong>個人化目標設定 (基於你的能力)：</strong><br>
-                    • 保守目標：4:45:00-5:00:00 (128W + 保守跑步)<br>
-                    • 現實目標：4:25:00-4:45:00 (134W + 目標跑步)<br>
-                    • 挑戰目標：4:10:00-4:25:00 (146W + 積極跑步)<br>
-                    • 你的跑步能力讓你有機會進入前10%！
+        
+        <!-- 三項能力排序 -->
+        <div class="section">
+            <h2>🏆 各項目排名排序</h2>
+            
+            <div class="grid-4">
+                <div class="grid-item">
+                    <div class="grid-item-title">游泳能力</div>
+                    <div class="grid-item-content">
+                        <div style="margin: 8px 0;">1️⃣ 吳家慶 (02:23)</div>
+                        <div style="margin: 8px 0;">2️⃣ 陳威仲 (02:42)</div>
+                        <div style="margin: 8px 0;">3️⃣ 潘美如 (02:44)</div>
+                        <div style="margin: 8px 0;">4️⃣ 葉烜宏 (02:46)</div>
+                    </div>
                 </div>
-                <div class="strategy-content">
-                    <strong>分段時間目標 (現實目標)：</strong><br>
-                    • 游泳950m：23:00 (2:26/100m)<br>
-                    • T1轉換：4:30<br>
-                    • 騎車90km：2:57:00 (134W平均)<br>
-                    • T2轉換：3:30<br>
-                    • 跑步21.1km：2:00:37 (5:42/km平均)<br>
-                    • 總時間：4:28:37
+                
+                <div class="grid-item">
+                    <div class="grid-item-title">騎車能力</div>
+                    <div class="grid-item-content">
+                        <div style="margin: 8px 0;">1️⃣ 吳家慶 (32.18)</div>
+                        <div style="margin: 8px 0;">2️⃣ 陳威仲 (30.42)</div>
+                        <div style="margin: 8px 0;">3️⃣ 葉烜宏 (29.51)</div>
+                        <div style="margin: 8px 0;">4️⃣ 潘美如 (25.14)</div>
+                    </div>
                 </div>
-                <div class="strategy-content">
-                    <strong>能力分析與優勢：</strong><br>
-                    • 跑步是你的強項：比賽事平均快48分鐘<br>
-                    • 前4km上坡是關鍵：需要耐心和策略<br>
-                    • 目標排名：總成績前10-15%<br>
-                    • 騎車功率控制將決定跑步表現
+                
+                <div class="grid-item">
+                    <div class="grid-item-title">跑步能力</div>
+                    <div class="grid-item-content">
+                        <div style="margin: 8px 0;">1️⃣ 葉烜宏 (05:37)</div>
+                        <div style="margin: 8px 0;">2️⃣ 潘美如 (06:11)</div>
+                        <div style="margin: 8px 0;">3️⃣ 陳威仲 (06:46)</div>
+                        <div style="margin: 8px 0;">4️⃣ 吳家慶 (07:38)</div>
+                    </div>
                 </div>
-                <div class="strategy-content">
-                    <strong>裝備準備：</strong><br>
-                    • 功率計設定：目標區間130-140W顯示<br>
-                    • 騎車營養：每小時60-80g碳水化合物<br>
-                    • 跑步補給：運動飲料+能量膠<br>
-                    • 心率監控：Z2-Z3區間為主
+                
+                <div class="grid-item">
+                    <div class="grid-item-title">過渡能力</div>
+                    <div class="grid-item-content">
+                        <div style="margin: 8px 0;">1️⃣ 葉烜宏 (07:51)</div>
+                        <div style="margin: 8px 0;">2️⃣ 陳威仲 (10:25)</div>
+                        <div style="margin: 8px 0;">3️⃣ 吳家慶 (13:18)</div>
+                        <div style="margin: 8px 0;">4️⃣ 潘美如 (14:10)</div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="strategy-card">
-                <div class="strategy-title">🏊‍♂️ 游泳策略 (基於950米實際經驗)</div>
-                <div class="strategy-content">
-                    <strong>950米短距離策略：</strong><br>
-                    • 距離縮短50%，可以稍微提高配速強度<br>
-                    • 前300m適應水溫和人群，中段500m穩定推進<br>
-                    • 最後150m可視體力狀況稍微加速<br>
-                    • 目標配速：2:12-2:39/100m (比標準距離快)
-                </div>
-                <div class="strategy-content">
-                    <strong>標準1900米參考策略：</strong><br>
-                    • 前500m保守配速 (2:45-3:00/100m)<br>
-                    • 中段900m穩定節奏 (2:26-2:39/100m)<br>
-                    • 最後500m維持或略快 (2:12-2:26/100m)<br>
-                    • 預期時間：41:50-50:22
-                </div>
-                <div class="strategy-content">
-                    <strong>技術重點：</strong><br>
-                    • 短距離游泳：可提高划頻，減少長划臂<br>
-                    • 標準距離：維持長划臂，雙邊換氣保持節奏<br>
-                    • 跟游策略：尋找配速相近的選手
-                </div>
-            </div>
-
-            <div class="strategy-card">
-                <div class="strategy-title">🚴‍♂️ 騎車策略 (基於FTP 195W)</div>
-                <div class="strategy-content">
-                    <strong>個人化功率配置：</strong><br>
-                    • 前30km：126-136W (65-70% FTP) - 保守起步，找到節奏<br>
-                    • 中30km：136-146W (70-75% FTP) - 穩定推進，主要工作段<br>
-                    • 後30km：126-136W (65-70% FTP) - 為跑步保留體力<br>
-                    • 平均目標：134W (約69% FTP)
-                </div>
-                <div class="strategy-content">
-                    <strong>功率與速度對照：</strong><br>
-                    • 保守策略：128W平均 → 27.8 km/h → 3:14:00<br>
-                    • 穩健策略：134W平均 → 30.5 km/h → 2:57:00<br>
-                    • 積極策略：146W平均 → 33.0 km/h → 2:43:00<br>
-                    • 最大不超過：156W (80% FTP)
-                </div>
-                <div class="strategy-content">
-                    <strong>爬坡功率策略：</strong><br>
-                    • 短爬坡 (<2min)：可達165-175W (85-90% FTP)<br>
-                    • 中爬坡 (2-8min)：維持146-156W (75-80% FTP)<br>
-                    • 長爬坡 (>8min)：不超過140W (72% FTP)<br>
-                    • 下坡恢復：保持空氣動力學姿勢，功率可降至100-120W
-                </div>
-            </div>
-
-            <div class="strategy-card">
-                <div class="strategy-title">🏃‍♂️ 跑步策略 (基於全馬3:00/半馬1:32能力)</div>
-                <div class="strategy-content">
-                    <strong>個人化配速策略：</strong><br>
-                    • 目標總時間：2:00:37 (平均5:42/km)<br>
-                    • 這將讓你位於賽事前15%的表現<br>
-                    • 比賽事平均快48分鐘！<br>
-                    • 你的跑步能力是這個年齡組的優勢
-                </div>
-                <div class="strategy-content">
-                    <strong>前4km上坡策略 (6%坡度)：</strong><br>
-                    • 目標配速：7:03/km (總時間28:15)<br>
-                    • 心率：接受Z3-Z4，不要壓抑<br>
-                    • 策略：穩定爬升，不要太激進<br>
-                    • 重點：為後段保留爆發力
-                </div>
-                <div class="strategy-content">
-                    <strong>中11km平路策略：</strong><br>
-                    • 目標配速：5:29/km (總時間60:26)<br>
-                    • 心率：控制在Z2-Z3<br>
-                    • 策略：上坡後逐漸找回節奏，建立巡航配速<br>
-                    • 補給：每5km補水+電解質，維持穩定攝取
-                </div>
-                <div class="strategy-content">
-                    <strong>後6.1km策略：</strong><br>
-                    • 目標配速：5:13/km (總時間31:55)<br>
-                    • 策略：接近半馬PB配速推進，最後5km可逐漸加速<br>
-                    • 心率：Z3-Z4，根據體力狀況調整<br>
-                    • 最後2km：利用跑步優勢衝刺至5:00/km以內
-                </div>
-                <div class="strategy-content">
-                    <strong>整體跑步策略重點：</strong><br>
-                    • 上坡段：接受心率上升，但配速要保守，為後段蓄力<br>
-                    • 平路段：利用你的半馬1:32能力維持強勢推進<br>
-                    • 收尾段：這是你超越其他選手的關鍵時刻<br>
-                    • 心理準備：你的跑步能力將是這場比賽的決勝關鍵
-                </div>
-            </div>
-
-            <div class="warning-box">
-                <h3>⚠️ 常見錯誤與避免方法</h3>
-                <p><strong>游泳階段：</strong>起游過快導致後段乏力 → 保持穩定節奏</p>
-                <p><strong>騎車階段：</strong>前段過於積極 → 功率控制在目標範圍內</p>
-                <p><strong>跑步階段：</strong>下車後配速過快 → 前2km保守適應</p>
-                <p><strong>營養策略：</strong>補給不足或過量 → 按計劃執行補給</p>
-            </div>
-
-            <div class="tip-box">
-                <h3>💡 進階技巧</h3>
-                <p><strong>心理策略：</strong>將比賽分成小段落，每完成一段給自己鼓勵</p>
-                <p><strong>體感監控：</strong>定期檢查呼吸、心率和肌肉狀況</p>
-                <p><strong>環境適應：</strong>提前了解賽道特點和天氣條件</p>
-                <p><strong>後備計劃：</strong>準備不同情況下的配速調整策略</p>
             </div>
         </div>
-
-        <!-- 標竿選手標籤 -->
-        <div id="athletes" class="tab-content">
-            <div class="section-title">🏆 標竿選手分析</div>
-            <div id="athletesContainer"></div>
+        
+        <!-- 能力分佈模式 -->
+        <div class="section">
+            <h2>📈 能力分佈特徵</h2>
+            
+            <div class="athletes-grid">
+                <div class="insight-box">
+                    <div style="font-size: 1.2em; font-weight: bold; color: #ffed4e; margin-bottom: 15px;">葉烜宏 - 錐形分佈 (T字型)</div>
+                    <div class="insight-item">跑步和過渡是兩個強項，撐起整體</div>
+                    <div class="insight-item">靠2個王牌彌補其他項目不足</div>
+                    <div class="insight-item">屬於「短衝型」選手</div>
+                    <div class="insight-item">在51.5km大鵬灣和IM703都表現優異</div>
+                </div>
+                
+                <div class="insight-box">
+                    <div style="font-size: 1.2em; font-weight: bold; color: #ffed4e; margin-bottom: 15px;">陳威仲 - 平衡分佈 (□字型)</div>
+                    <div class="insight-item">游泳+騎車雙強，整體均衡</div>
+                    <div class="insight-item">長距離最有利的能力結構</div>
+                    <div class="insight-item">50歲年紀保持優勢難得</div>
+                    <div class="insight-item">在大鵬灣排35，IM703排32 - 越長越強</div>
+                </div>
+                
+                <div class="insight-box">
+                    <div style="font-size: 1.2em; font-weight: bold; color: #ffed4e; margin-bottom: 15px;">吳家慶 - 失衡分佈 (△字型)</div>
+                    <div class="insight-item">游泳+騎車雙王牌，卻排42</div>
+                    <div class="insight-item">跑步(7:38)和過渡(13:18)嚴重拖累</div>
+                    <div class="insight-item">35歲黃金年齡表現不符預期</div>
+                    <div class="insight-item">改進潛力最大 (+5-8分鐘)</div>
+                </div>
+                
+                <div class="insight-box">
+                    <div style="font-size: 1.2em; font-weight: bold; color: #ffed4e; margin-bottom: 15px;">潘美如 - 單項分佈 (└字型)</div>
+                    <div class="insight-item">全隊只有跑步及格</div>
+                    <div class="insight-item">騎車慢5km/h，過渡浪費6分鐘!</div>
+                    <div class="insight-item">排名2因為是分齡女性排名</div>
+                    <div class="insight-item">整體實力最弱，但改進空間最大</div>
+                </div>
+            </div>
         </div>
+        
+        <!-- 關鍵洞察 -->
+        <div class="section">
+            <h2>💡 關鍵洞察 & 訓練建議</h2>
+            
+            <div class="insight-box">
+                <div style="font-size: 1.2em; font-weight: bold; color: #ffed4e; margin-bottom: 15px;">核心發現</div>
+                <div class="insight-item"><strong>短衝 vs 長距離：</strong>葉烜宏的短衝優勢(跑步爆表)在IM703仍然有效，但陳威仲的長距離均衡優勢正逐漸顯現</div>
+                <div class="insight-item"><strong>過渡時間的威力：</strong>葉烜宏(07:51)vs潘美如(14:10)差6分多鐘！過渡流程優化可以帶來奇蹟般的進步</div>
+                <div class="insight-item"><strong>年齡優勢悖論：</strong>35歲吳家慶排42，50歲陳威仲排32 - 說明能力結構比年齡更重要</div>
+                <div class="insight-item"><strong>最被忽視的問題：</strong>吳家慶和潘美如都浪費了太多過渡時間，這比任何單項訓練都有效</div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <h3 style="color: #ffed4e; margin-bottom: 20px;">✅ 訓練優先級建議</h3>
+                
+                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                    <div style="font-weight: bold; color: #4ade80; margin-bottom: 10px;">🎯 吳家慶 - 最大改進潛力 (+5-8分鐘)</div>
+                    <div style="margin-left: 15px; font-size: 0.95em; line-height: 1.8;">
+                        <div>1️⃣ 優先: 跑步訓練 (從7:38→06:30, 省1分鐘)</div>
+                        <div>2️⃣ 其次: 過渡優化 (從13:18→11:30, 省1.5分鐘)</div>
+                        <div>3️⃣ 維持: 游泳+騎車已是王牌</div>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                    <div style="font-weight: bold; color: #ff6b6b; margin-bottom: 10px;">⚠️ 潘美如 - 最大改進難度 (+8-12分鐘)</div>
+                    <div style="margin-left: 15px; font-size: 0.95em; line-height: 1.8;">
+                        <div>1️⃣ 優先: 騎車訓練 (從25.14→27.5, 省1.5分鐘)</div>
+                        <div>2️⃣ 重點: 過渡優化 (從14:10→11:30, 省2.5分鐘)</div>
+                        <div>3️⃣ 其次: 跑步配速提升</div>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                    <div style="font-weight: bold; color: #4ade80; margin-bottom: 10px;">✅ 陳威仲 - 均衡微調 (+3-5分鐘)</div>
+                    <div style="margin-left: 15px; font-size: 0.95em; line-height: 1.8;">
+                        <div>1️⃣ 微調: 跑步訓練 (從6:46→6:30, 省15秒)</div>
+                        <div>2️⃣ 優化: 過渡流程 (從10:25→9:30, 省55秒)</div>
+                        <div>3️⃣ 維持: 游泳+騎車現狀</div>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px;">
+                    <div style="font-weight: bold; color: #ffed4e; margin-bottom: 10px;">🏆 葉烜宏 - 已達極限 (+2-3分鐘)</div>
+                    <div style="margin-left: 15px; font-size: 0.95em; line-height: 1.8;">
+                        <div>1️⃣ 維持: 跑步和過渡優勢</div>
+                        <div>2️⃣ 微調: 游泳改善20秒</div>
+                        <div>3️⃣ 微調: 騎車改善30秒</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #d4af37; opacity: 0.6;">
+            <p>數據來源：IM703全程鐵人三項賽</p>
+            <p style="margin-top: 5px;">分析日期：2025年12月</p>
+        </footer>
     </div>
-
-    <script>
-        // 完整485位選手數據分析
-        const combinedData = {
-            totalAthletes: 485,
-            totalCompleted: 402,
-            avgTotalTime: "6:29:41",
-            medianTotalTime: "6:28:25",
-            bestTime: "4:19:59",
-            worstTime: "8:17:23",
-            avgSwimTime: "23:15",
-            medianSwimTime: "23:03",
-            avgBikeTime: "3:00:04",
-            medianBikeTime: "2:57:07",
-            avgRunTime: "2:50:38",
-            medianRunTime: "2:48:55",
-            age40_44Count: 224,
-            age45_49Count: 261,
-
-            swimPaces: {
-                fast: "0:53-1:00/100m",
-                moderate: "1:00-1:06/100m",
-                conservative: "1:06+/100m"
-            },
-
-            bikeSpeeds: {
-                fast: "30+ km/h",
-                moderate: "27-30 km/h",
-                conservative: "25-27 km/h"
-            },
-
-            runPaces: {
-                fast: "4:30-5:10/km",
-                moderate: "5:10-5:45/km",
-                conservative: "5:45+/km"
-            },
-
-            topPerformers: [
-                {
-                    name: "Jen Mao HSU",
-                    position: 3,
-                    totalTime: "4:19:59",
-                    swim: "18:27",
-                    bike: "2:18:39",
-                    run: "1:36:35",
-                    ageGroup: "45-49",
-                    strategy: "穩定游泳，強勢騎車，優秀跑步"
-                },
-                {
-                    name: "Todd MILLINER",
-                    position: 13,
-                    totalTime: "4:31:39",
-                    swim: "15:01",
-                    bike: "2:23:39",
-                    run: "1:46:34",
-                    ageGroup: "40-44",
-                    strategy: "快速游泳，穩定騎車，保守跑步"
-                },
-                {
-                    name: "Yasuo UMETANI",
-                    position: 14,
-                    totalTime: "4:31:45",
-                    swim: "17:28",
-                    bike: "2:23:23",
-                    run: "1:43:42",
-                    ageGroup: "40-44",
-                    strategy: "均衡各項，穩定發揮"
-                }
-            ]
-        };
-
-        function showTab(tabName) {
-            // 隱藏所有標籤內容
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
-
-            // 移除所有標籤的active狀態
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
-
-            // 顯示選中的標籤內容
-            document.getElementById(tabName).classList.add('active');
-
-            // 設置選中的標籤為active
-            event.target.classList.add('active');
-
-            // 根據標籤載入對應的圖表
-            if (tabName === 'overview') {
-                loadOverviewChart();
-            } else if (tabName === 'pacing') {
-                loadPacingChart();
-            } else if (tabName === 'athletes') {
-                loadAthleteAnalysis();
-            }
-        }
-
-        function timeToMinutes(timeStr) {
-            const parts = timeStr.split(':');
-            if (parts.length === 3) {
-                return parseInt(parts[0]) * 60 + parseInt(parts[1]) + parseInt(parts[2]) / 60;
-            } else if (parts.length === 2) {
-                return parseInt(parts[0]) + parseInt(parts[1]) / 60;
-            }
-            return 0;
-        }
-
-        function loadOverviewChart() {
-            const ctx = document.getElementById('overviewChart').getContext('2d');
-
-            // 分段時間數據
-            const swimAvg = timeToMinutes("19:01");
-            const bikeAvg = timeToMinutes("2:53:25") - swimAvg;
-            const runAvg = timeToMinutes("4:47:58") - timeToMinutes("2:53:25");
-
-            const data = {
-                labels: ['游泳', '騎車', '跑步'],
-                datasets: [{
-                    label: '平均時間 (分鐘)',
-                    data: [swimAvg, bikeAvg, runAvg],
-                    backgroundColor: [
-                        'rgba(52, 152, 219, 0.8)',
-                        'rgba(231, 76, 60, 0.8)',
-                        'rgba(46, 204, 113, 0.8)'
-                    ],
-                    borderColor: [
-                        'rgba(52, 152, 219, 1)',
-                        'rgba(231, 76, 60, 1)',
-                        'rgba(46, 204, 113, 1)'
-                    ],
-                    borderWidth: 2
-                }, {
-                    label: '最佳表現 (分鐘)',
-                    data: [
-                        timeToMinutes("18:27"),
-                        timeToMinutes("2:18:39") - timeToMinutes("18:27"),
-                        timeToMinutes("4:19:59") - timeToMinutes("2:18:39")
-                    ],
-                    backgroundColor: [
-                        'rgba(155, 89, 182, 0.6)',
-                        'rgba(155, 89, 182, 0.6)',
-                        'rgba(155, 89, 182, 0.6)'
-                    ],
-                    borderColor: 'rgba(155, 89, 182, 1)',
-                    borderWidth: 2
-                }]
-            };
-
-            new Chart(ctx, {
-                type: 'bar',
-                data: data,
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: '各項目時間分布 (分鐘)'
-                        },
-                        legend: {
-                            display: true
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: '時間 (分鐘)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        function loadPacingChart() {
-            const ctx = document.getElementById('pacingChart').getContext('2d');
-
-            const checkpoints = ['Start', 'Swim', 'T1', 'Bike 26k', 'Bike 46.7k', 'Bike 66.7k', 'Cycle', 'T2', 'Run 7k', 'Run 15k', 'Finish'];
-            const avgTimes = [0, 19, 24, 67, 98, 128, 173, 176, 213, 251, 288]; // 累計分鐘數
-            const bestTimes = [0, 18.5, 22.5, 61, 91, 119.5, 161, 163.5, 198, 231, 260]; // 最佳表現累計分鐘數
-
-            const data = {
-                labels: checkpoints,
-                datasets: [{
-                    label: '平均表現',
-                    data: avgTimes,
-                    borderColor: 'rgba(231, 76, 60, 1)',
-                    backgroundColor: 'rgba(231, 76, 60, 0.1)',
-                    tension: 0.4,
-                    pointRadius: 6,
-                    pointHoverRadius: 8
-                }, {
-                    label: '目標表現',
-                    data: bestTimes,
-                    borderColor: 'rgba(46, 204, 113, 1)',
-                    backgroundColor: 'rgba(46, 204, 113, 0.1)',
-                    tension: 0.4,
-                    pointRadius: 6,
-                    pointHoverRadius: 8,
-                    borderDash: [5, 5]
-                }]
-            };
-
-            new Chart(ctx, {
-                type: 'line',
-                data: data,
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: '累計時間趨勢與目標對比'
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: '累計時間 (分鐘)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        function loadAthleteAnalysis() {
-            const container = document.getElementById('athletesContainer');
-            container.innerHTML = '';
-
-            combinedData.topPerformers.forEach(athlete => {
-                const card = document.createElement('div');
-                card.className = 'athlete-card';
-
-                // 判斷各項目表現等級
-                const swimClass = timeToMinutes(athlete.swim) < 18 ? 'excellent-time' :
-                                timeToMinutes(athlete.swim) < 20 ? 'good-time' : 'average-time';
-
-                const bikeClass = timeToMinutes(athlete.bike) < 140 ? 'excellent-time' :
-                                timeToMinutes(athlete.bike) < 160 ? 'good-time' : 'average-time';
-
-                const runClass = timeToMinutes(athlete.run) < 100 ? 'excellent-time' :
-                                timeToMinutes(athlete.run) < 110 ? 'good-time' : 'average-time';
-
-                card.innerHTML = `
-                    <div class="athlete-name">${athlete.name} (總排名第${athlete.position}名)</div>
-                    <div style="margin-bottom: 15px;">
-                        <strong>年齡組:</strong> ${athlete.ageGroup} |
-                        <strong>總時間:</strong> ${athlete.totalTime}
-                    </div>
-
-                    <div style="margin-bottom: 15px;">
-                        <div><strong>分段表現:</strong></div>
-                        <span class="time-badge ${swimClass}">游泳 ${athlete.swim}</span>
-                        <span class="time-badge ${bikeClass}">騎車 ${athlete.bike}</span>
-                        <span class="time-badge ${runClass}">跑步 ${athlete.run}</span>
-                    </div>
-
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                        <strong>成功策略:</strong> ${athlete.strategy}
-                    </div>
-
-                    <div style="margin-top: 15px; font-size: 0.9em; color: #666;">
-                        <strong>學習重點:</strong>
-                        ${athlete.name === 'Jen Mao HSU' ? '整體均衡發展，特別是跑步階段的配速控制' :
-                          athlete.name === 'Todd MILLINER' ? '游泳技術優秀，可作為游泳配速參考' :
-                          '各項目穩定發揮，適合作為整體策略參考'}
-                    </div>
-                `;
-
-                container.appendChild(card);
-            });
-
-            // 添加總結建議
-            const summaryCard = document.createElement('div');
-            summaryCard.className = 'athlete-card';
-            summaryCard.style.background = 'linear-gradient(135deg, #3498DB 0%, #2980B9 100%)';
-            summaryCard.style.color = 'white';
-            summaryCard.innerHTML = `
-                <div class="athlete-name" style="color: white;">📊 標竿分析總結</div>
-                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
-                    <strong>游泳策略:</strong> 保持在18-20分鐘區間，重點是穩定節奏而非速度
-                </div>
-                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
-                    <strong>騎車策略:</strong> 控制在2:20-2:30區間，保留體力給跑步段
-                </div>
-                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
-                    <strong>跑步策略:</strong> 前段保守，後段視體力狀況調整，目標1:40-1:50
-                </div>
-            `;
-            container.appendChild(summaryCard);
-        }
-
-        // 頁面載入時初始化
-        document.addEventListener('DOMContentLoaded', function() {
-            loadOverviewChart();
-        });
-    </script>
 </body>
 </html>
