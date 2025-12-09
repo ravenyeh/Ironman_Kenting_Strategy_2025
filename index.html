@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IM703 四位選手能力分析對比</title>
+    <title>修正版：IM703 vs IRONMAN澎湖 - 跨賽事對比分析</title>
     <style>
         * {
             margin: 0;
@@ -26,23 +26,30 @@
         
         header {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 40px;
-            background: rgba(212, 175, 55, 0.1);
+            margin-bottom: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
             border: 2px solid #d4af37;
             border-radius: 10px;
         }
         
         h1 {
-            font-size: 2.8em;
+            font-size: 2.5em;
             margin-bottom: 10px;
             text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
         }
         
-        .subtitle {
-            font-size: 1.3em;
-            opacity: 0.9;
-            margin: 15px 0;
+        .correction-banner {
+            background: rgba(255, 193, 7, 0.2);
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #ffc107;
+        }
+        
+        .correction-banner strong {
+            color: #ffed4e;
         }
         
         .section {
@@ -54,134 +61,107 @@
             box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
         }
         
-        .section h2 {
-            font-size: 1.8em;
+        h2 {
+            font-size: 1.6em;
             margin-bottom: 25px;
             padding-bottom: 15px;
             border-bottom: 2px solid #d4af37;
             color: #ffed4e;
         }
         
-        .athletes-grid {
+        .athlete-comparison {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
             margin-bottom: 30px;
         }
         
-        .athlete-card {
+        .athlete-box {
             background: rgba(0, 0, 0, 0.4);
             border: 2px solid #d4af37;
-            border-radius: 10px;
-            padding: 25px;
-            transition: all 0.3s ease;
+            border-radius: 8px;
+            padding: 20px;
         }
         
-        .athlete-card:hover {
-            background: rgba(212, 175, 55, 0.15);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-        }
-        
-        .athlete-header {
-            font-size: 1.4em;
+        .athlete-name {
+            font-size: 1.3em;
             font-weight: bold;
-            margin-bottom: 10px;
             color: #ffed4e;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #d4af37;
         }
         
-        .athlete-info {
-            font-size: 0.95em;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-        
-        .info-row {
-            margin: 8px 0;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .info-label {
-            opacity: 0.8;
-        }
-        
-        .info-value {
-            color: #ffffff;
-            font-weight: bold;
-        }
-        
-        .comparison-table {
+        table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
             font-size: 0.95em;
         }
         
-        .comparison-table th {
+        th {
             background: rgba(212, 175, 55, 0.2);
             color: #ffed4e;
             padding: 12px;
             text-align: left;
             border: 1px solid #d4af37;
+            font-weight: bold;
         }
         
-        .comparison-table td {
+        td {
             padding: 12px;
             border: 1px solid rgba(212, 175, 55, 0.3);
         }
         
-        .comparison-table tr:nth-child(even) {
+        tr:nth-child(even) {
             background: rgba(0, 0, 0, 0.2);
         }
         
-        .rank-1 { background: rgba(212, 175, 55, 0.3) !important; }
-        .rank-2 { background: rgba(100, 100, 100, 0.3) !important; }
-        .rank-3 { background: rgba(150, 100, 50, 0.3) !important; }
-        .rank-4 { background: rgba(0, 0, 0, 0.5) !important; }
-        
-        .ability-bar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 8px 0;
-            font-size: 0.9em;
+        .stat-box {
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
         }
         
-        .bar-label {
-            width: 80px;
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            border-left: 3px solid #d4af37;
+        }
+        
+        .stat-value {
+            font-size: 1.8em;
+            color: #ffed4e;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
             opacity: 0.8;
         }
         
-        .bar-container {
-            flex: 1;
-            height: 20px;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 5px;
-            overflow: hidden;
-            border: 1px solid #d4af37;
-        }
-        
-        .bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #d4af37, #ffed4e);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8em;
-            color: #000;
-            font-weight: bold;
-        }
-        
         .insight-box {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
             border: 2px solid #d4af37;
-            border-radius: 10px;
-            padding: 25px;
+            border-radius: 8px;
+            padding: 20px;
             margin: 20px 0;
         }
         
         .insight-item {
-            margin: 12px 0 12px 20px;
+            margin: 10px 0 10px 20px;
             position: relative;
         }
         
@@ -193,46 +173,91 @@
             font-weight: bold;
         }
         
-        .grid-4 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
+        .highlight {
+            background: rgba(76, 175, 80, 0.2);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #4ade80;
+        }
+        
+        .warning {
+            background: rgba(244, 67, 54, 0.2);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #ff6b6b;
+        }
+        
+        .percentile-bar {
+            display: flex;
+            align-items: center;
             gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .bar-label {
+            min-width: 80px;
+            font-size: 0.9em;
+        }
+        
+        .bar-container {
+            flex: 1;
+            height: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid #d4af37;
+            position: relative;
+        }
+        
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #d4af37, #ffed4e);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            font-size: 0.8em;
+            color: #000;
+            font-weight: bold;
+        }
+        
+        .recommendation {
+            background: rgba(76, 222, 128, 0.1);
+            border: 2px solid #4ade80;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .recommendation-title {
+            color: #4ade80;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .conclusion-box {
+            background: rgba(212, 175, 55, 0.1);
+            border: 3px solid #ffed4e;
+            border-radius: 8px;
+            padding: 25px;
             margin: 20px 0;
         }
         
-        .grid-item {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 3px solid #d4af37;
-        }
-        
-        .grid-item-title {
-            color: #ffed4e;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-        
-        .grid-item-content {
-            font-size: 0.9em;
-            line-height: 1.6;
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #d4af37;
+            opacity: 0.6;
         }
         
         @media (max-width: 1200px) {
-            .athletes-grid {
+            .athlete-comparison {
                 grid-template-columns: 1fr;
             }
-            .grid-4 {
+            .stat-grid {
                 grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 1.8em;
-            }
-            .grid-4 {
-                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -240,343 +265,346 @@
 <body>
     <div class="container">
         <header>
-            <h1>🏆 IM703 全程鐵人三項賽</h1>
-            <p class="subtitle">四位選手能力分析對比</p>
-            <p style="margin-top: 20px; opacity: 0.8;">2025年11月 | 1614 / 1919 / 1359 / 1173</p>
+            <h1>✅ 修正版分析</h1>
+            <h2 style="color: #ffed4e; font-size: 1.4em; margin-top: 10px;">IM703 vs IRONMAN澎湖 - 跨賽事對比</h2>
+            <p style="margin-top: 15px; opacity: 0.8;">基於分組排名和百分位數的公平比較</p>
+            
+            <div class="correction-banner">
+                <strong>⚠️ 重要更正：</strong>本分析使用<strong>百分位數</strong>而非絕對排名，以確保公平比較。
+                之前的分析錯誤地混合了分組排名和不同規模賽事的數據。
+            </div>
         </header>
         
-        <!-- 基本信息對比 -->
+        <!-- 核心數據對比 -->
         <div class="section">
-            <h2>📋 基本信息 & 整體排名</h2>
+            <h2>📊 三位選手跨賽事對比 - 百分位數分析</h2>
             
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>選手</th>
-                        <th>年齡組</th>
-                        <th>總成績</th>
-                        <th>排名</th>
-                        <th>特徵</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="rank-1">
-                        <td style="font-weight: bold; color: #ffed4e;">葉烜宏 (1614)</td>
-                        <td>40-44</td>
-                        <td style="font-weight: bold;">06:00:39</td>
-                        <td><strong>30</strong></td>
-                        <td>跑步爆表 + 過渡頂級</td>
-                    </tr>
-                    <tr class="rank-2">
-                        <td style="font-weight: bold; color: #ffed4e;">陳威仲 (1919)</td>
-                        <td>50-54</td>
-                        <td style="font-weight: bold;">06:21:22</td>
-                        <td><strong>32</strong></td>
-                        <td>游泳+騎車雙強</td>
-                    </tr>
-                    <tr class="rank-3">
-                        <td style="font-weight: bold; color: #ffed4e;">吳家慶 (1359)</td>
-                        <td>35-39</td>
-                        <td style="font-weight: bold;">06:26:53</td>
-                        <td><strong>42</strong></td>
-                        <td>游泳+騎車王牌</td>
-                    </tr>
-                    <tr class="rank-4">
-                        <td style="font-weight: bold; color: #ffed4e;">潘美如 (1173)</td>
-                        <td>50-54</td>
-                        <td style="font-weight: bold;">06:49:50</td>
-                        <td><strong>2*</strong></td>
-                        <td>分齡排名2（女性50-54）</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <!-- 四位選手詳細卡片 -->
-        <div class="section">
-            <h2>🔍 四位選手詳細分析</h2>
-            
-            <div class="athletes-grid">
-                <!-- 葉烜宏 -->
-                <div class="athlete-card" style="border-color: #ffed4e;">
-                    <div class="athlete-header">⭐ 葉烜宏 (1614) - 40-44歲</div>
-                    <div class="athlete-info">
-                        <div class="info-row">
-                            <span class="info-label">總成績:</span>
-                            <span class="info-value">06:00:39 (排名30)</span>
+            <div class="athlete-comparison">
+                <!-- 潘美如 -->
+                <div class="athlete-box">
+                    <div class="athlete-name">潘美如 (50-54歲女性)</div>
+                    <table>
+                        <tr>
+                            <td style="color: #4ade80;">IM703</td>
+                            <td>排名 2/~30人</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #4ade80;">百分位</td>
+                            <td style="color: #ffed4e;"><strong>前6.7%</strong> ⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #4ade80;">成績</td>
+                            <td>06:49:50</td>
+                        </tr>
+                        <tr style="background: rgba(212, 175, 55, 0.2);">
+                            <td style="color: #ffed4e;">IRONMAN</td>
+                            <td>排名 110/168人</td>
+                        </tr>
+                        <tr style="background: rgba(212, 175, 55, 0.2);">
+                            <td style="color: #ffed4e;">百分位</td>
+                            <td>前65.5%</td>
+                        </tr>
+                        <tr style="background: rgba(212, 175, 55, 0.2);">
+                            <td style="color: #ffed4e;">成績</td>
+                            <td>15:37:43</td>
+                        </tr>
+                        <tr style="background: rgba(244, 67, 54, 0.2);">
+                            <td style="color: #ff6b6b;"><strong>變化</strong></td>
+                            <td style="color: #ff6b6b;"><strong>-59百分位</strong></td>
+                        </tr>
+                    </table>
+                    <div class="insight-box" style="margin-top: 15px;">
+                        <strong style="color: #ffed4e;">💡 分析</strong>
+                        <div style="margin-top: 10px; font-size: 0.9em;">
+                            從組內精英(前7%)掉到中等(66%)，下滑幅度最大。短距離的爆發力無法在長距離維持。
                         </div>
-                    </div>
-                    
-                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                        <div style="color: #4ade80; font-weight: bold; margin-bottom: 10px;">✅ 王牌能力</div>
-                        <div class="ability-bar">
-                            <span class="bar-label">跑步</span>
-                            <div class="bar-container"><div class="bar-fill" style="width: 95%;">05:37</div></div>
-                        </div>
-                        <div class="ability-bar">
-                            <span class="bar-label">過渡</span>
-                            <div class="bar-container"><div class="bar-fill" style="width: 100%;">07:51</div></div>
-                        </div>
-                    </div>
-                    
-                    <div style="font-size: 0.9em; line-height: 1.7;">
-                        <p><strong>💡 能力特徵：</strong></p>
-                        <ul style="margin-left: 15px;">
-                            <li>跑步全隊最強 (05:37/km)</li>
-                            <li>過渡效率業界頂級</li>
-                            <li>領先次名2分34秒!</li>
-                            <li>典型"跑步爆表型"選手</li>
-                        </ul>
                     </div>
                 </div>
                 
                 <!-- 陳威仲 -->
-                <div class="athlete-card" style="border-color: #c0c0c0;">
-                    <div class="athlete-header">💪 陳威仲 (1919) - 50-54歲</div>
-                    <div class="athlete-info">
-                        <div class="info-row">
-                            <span class="info-label">總成績:</span>
-                            <span class="info-value">06:21:22 (排名32)</span>
+                <div class="athlete-box" style="border-color: #4ade80;">
+                    <div class="athlete-name" style="color: #4ade80; border-bottom-color: #4ade80;">陳威仲 (50-54歲男性) ⭐</div>
+                    <table>
+                        <tr>
+                            <td style="color: #4ade80;">IM703</td>
+                            <td>排名 32/~60人</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #4ade80;">百分位</td>
+                            <td style="color: #ffed4e;"><strong>前53%</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="color: #4ade80;">成績</td>
+                            <td>06:21:22</td>
+                        </tr>
+                        <tr style="background: rgba(74, 222, 128, 0.2);">
+                            <td style="color: #4ade80;">IRONMAN</td>
+                            <td>排名 235/168人</td>
+                        </tr>
+                        <tr style="background: rgba(74, 222, 128, 0.2);">
+                            <td style="color: #4ade80;">百分位</td>
+                            <td style="color: #ffed4e;"><strong>前44.9%</strong></td>
+                        </tr>
+                        <tr style="background: rgba(74, 222, 128, 0.2);">
+                            <td style="color: #4ade80;">成績</td>
+                            <td>13:00:42</td>
+                        </tr>
+                        <tr style="background: rgba(74, 222, 128, 0.2);">
+                            <td style="color: #4ade80;"><strong>變化</strong></td>
+                            <td style="color: #4ade80;"><strong>-8.1百分位</strong></td>
+                        </tr>
+                    </table>
+                    <div class="insight-box" style="margin-top: 15px; border-color: #4ade80; background: rgba(74, 222, 128, 0.1);">
+                        <strong style="color: #4ade80;">💡 分析</strong>
+                        <div style="margin-top: 10px; font-size: 0.9em;">
+                            相對排名最穩定！從中等→中等，相對位置變化最小。訓練體系最均衡。
                         </div>
-                    </div>
-                    
-                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                        <div style="color: #4ade80; font-weight: bold; margin-bottom: 10px;">✅ 雙重優勢</div>
-                        <div class="ability-bar">
-                            <span class="bar-label">游泳</span>
-                            <div class="bar-container"><div class="bar-fill" style="width: 85%;">02:42</div></div>
-                        </div>
-                        <div class="ability-bar">
-                            <span class="bar-label">騎車</span>
-                            <div class="bar-container"><div class="bar-fill" style="width: 88%;">30.42</div></div>
-                        </div>
-                    </div>
-                    
-                    <div style="font-size: 0.9em; line-height: 1.7;">
-                        <p><strong>💡 能力特徵：</strong></p>
-                        <ul style="margin-left: 15px;">
-                            <li>典型"均衡型"選手</li>
-                            <li>游泳+騎車雙強</li>
-                            <li>50歲排32超越30+歲的吳</li>
-                            <li>長距離最有利</li>
-                        </ul>
                     </div>
                 </div>
                 
                 <!-- 吳家慶 -->
-                <div class="athlete-card" style="border-color: #cd7f32;">
-                    <div class="athlete-header">🌟 吳家慶 (1359) - 35-39歲</div>
-                    <div class="athlete-info">
-                        <div class="info-row">
-                            <span class="info-label">總成績:</span>
-                            <span class="info-value">06:26:53 (排名42)</span>
+                <div class="athlete-box">
+                    <div class="athlete-name">吳家慶 (35-39歲男性)</div>
+                    <table>
+                        <tr>
+                            <td style="color: #4ade80;">IM703</td>
+                            <td>排名 42/~50人</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #4ade80;">百分位</td>
+                            <td style="color: #ffed4e;"><strong>前84%</strong></td>
+                        </tr>
+                        <tr>
+                            <td style="color: #4ade80;">成績</td>
+                            <td>06:26:53</td>
+                        </tr>
+                        <tr style="background: rgba(212, 175, 55, 0.2);">
+                            <td style="color: #ffed4e;">IRONMAN</td>
+                            <td>排名 371/92人</td>
+                        </tr>
+                        <tr style="background: rgba(212, 175, 55, 0.2);">
+                            <td style="color: #ffed4e;">百分位</td>
+                            <td>前73%</td>
+                        </tr>
+                        <tr style="background: rgba(212, 175, 55, 0.2);">
+                            <td style="color: #ffed4e;">成績</td>
+                            <td>14:15:42</td>
+                        </tr>
+                        <tr style="background: rgba(212, 175, 55, 0.2);">
+                            <td style="color: #ffed4e;"><strong>變化</strong></td>
+                            <td>-11百分位</td>
+                        </tr>
+                    </table>
+                    <div class="insight-box" style="margin-top: 15px;">
+                        <strong style="color: #ffed4e;">💡 分析</strong>
+                        <div style="margin-top: 10px; font-size: 0.9em;">
+                            兩個距離都是中等偏下，相對下滑-11百分位。本身沒有特殊優勢。
                         </div>
-                    </div>
-                    
-                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                        <div style="color: #ffed4e; font-weight: bold; margin-bottom: 10px;">⚠️ 極端分佈</div>
-                        <div class="ability-bar">
-                            <span class="bar-label">游泳</span>
-                            <div class="bar-container"><div class="bar-fill" style="width: 100%;">02:23</div></div>
-                        </div>
-                        <div class="ability-bar">
-                            <span class="bar-label">騎車</span>
-                            <div class="bar-container"><div class="bar-fill" style="width: 100%;">32.18</div></div>
-                        </div>
-                        <div class="ability-bar">
-                            <span class="bar-label">跑步</span>
-                            <div class="bar-container"><div class="bar-fill" style="width: 55%;">07:38</div></div>
-                        </div>
-                    </div>
-                    
-                    <div style="font-size: 0.9em; line-height: 1.7;">
-                        <p><strong>💡 能力特徵：</strong></p>
-                        <ul style="margin-left: 15px;">
-                            <li>游泳+騎車全隊最強</li>
-                            <li>跑步全隊最慢(7:38)</li>
-                            <li>過渡時間拖累(13:18)</li>
-                            <li>改進潛力最大(+5-8min)</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <!-- 潘美如 -->
-                <div class="athlete-card" style="border-color: #666;">
-                    <div class="athlete-header">📊 潘美如 (1173) - 50-54歲</div>
-                    <div class="athlete-info">
-                        <div class="info-row">
-                            <span class="info-label">總成績:</span>
-                            <span class="info-value">06:49:50 (分齡排2)</span>
-                        </div>
-                    </div>
-                    
-                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                        <div style="color: #ff6b6b; font-weight: bold; margin-bottom: 10px;">⚠️ 最弱表現</div>
-                        <div class="ability-bar">
-                            <span class="bar-label">騎車</span>
-                            <div class="bar-container"><div class="bar-fill" style="width: 65%;">25.14</div></div>
-                        </div>
-                        <div class="ability-bar">
-                            <span class="bar-label">過渡</span>
-                            <div class="bar-container"><div class="bar-fill" style="width: 55%;">14:10</div></div>
-                        </div>
-                    </div>
-                    
-                    <div style="font-size: 0.9em; line-height: 1.7;">
-                        <p><strong>💡 能力特徵：</strong></p>
-                        <ul style="margin-left: 15px;">
-                            <li>騎車全隊最慢(25.14km/h)</li>
-                            <li>過渡最長(14:10,慢6分)</li>
-                            <li>排名2因為是分齡女性排名</li>
-                            <li>改進空間最大但難度高</li>
-                        </ul>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- 三項能力排序 -->
+        <!-- 關鍵發現 -->
         <div class="section">
-            <h2>🏆 各項目排名排序</h2>
-            
-            <div class="grid-4">
-                <div class="grid-item">
-                    <div class="grid-item-title">游泳能力</div>
-                    <div class="grid-item-content">
-                        <div style="margin: 8px 0;">1️⃣ 吳家慶 (02:23)</div>
-                        <div style="margin: 8px 0;">2️⃣ 陳威仲 (02:42)</div>
-                        <div style="margin: 8px 0;">3️⃣ 潘美如 (02:44)</div>
-                        <div style="margin: 8px 0;">4️⃣ 葉烜宏 (02:46)</div>
-                    </div>
-                </div>
-                
-                <div class="grid-item">
-                    <div class="grid-item-title">騎車能力</div>
-                    <div class="grid-item-content">
-                        <div style="margin: 8px 0;">1️⃣ 吳家慶 (32.18)</div>
-                        <div style="margin: 8px 0;">2️⃣ 陳威仲 (30.42)</div>
-                        <div style="margin: 8px 0;">3️⃣ 葉烜宏 (29.51)</div>
-                        <div style="margin: 8px 0;">4️⃣ 潘美如 (25.14)</div>
-                    </div>
-                </div>
-                
-                <div class="grid-item">
-                    <div class="grid-item-title">跑步能力</div>
-                    <div class="grid-item-content">
-                        <div style="margin: 8px 0;">1️⃣ 葉烜宏 (05:37)</div>
-                        <div style="margin: 8px 0;">2️⃣ 潘美如 (06:11)</div>
-                        <div style="margin: 8px 0;">3️⃣ 陳威仲 (06:46)</div>
-                        <div style="margin: 8px 0;">4️⃣ 吳家慶 (07:38)</div>
-                    </div>
-                </div>
-                
-                <div class="grid-item">
-                    <div class="grid-item-title">過渡能力</div>
-                    <div class="grid-item-content">
-                        <div style="margin: 8px 0;">1️⃣ 葉烜宏 (07:51)</div>
-                        <div style="margin: 8px 0;">2️⃣ 陳威仲 (10:25)</div>
-                        <div style="margin: 8px 0;">3️⃣ 吳家慶 (13:18)</div>
-                        <div style="margin: 8px 0;">4️⃣ 潘美如 (14:10)</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 能力分佈模式 -->
-        <div class="section">
-            <h2>📈 能力分佈特徵</h2>
-            
-            <div class="athletes-grid">
-                <div class="insight-box">
-                    <div style="font-size: 1.2em; font-weight: bold; color: #ffed4e; margin-bottom: 15px;">葉烜宏 - 錐形分佈 (T字型)</div>
-                    <div class="insight-item">跑步和過渡是兩個強項，撐起整體</div>
-                    <div class="insight-item">靠2個王牌彌補其他項目不足</div>
-                    <div class="insight-item">屬於「短衝型」選手</div>
-                    <div class="insight-item">在51.5km大鵬灣和IM703都表現優異</div>
-                </div>
-                
-                <div class="insight-box">
-                    <div style="font-size: 1.2em; font-weight: bold; color: #ffed4e; margin-bottom: 15px;">陳威仲 - 平衡分佈 (□字型)</div>
-                    <div class="insight-item">游泳+騎車雙強，整體均衡</div>
-                    <div class="insight-item">長距離最有利的能力結構</div>
-                    <div class="insight-item">50歲年紀保持優勢難得</div>
-                    <div class="insight-item">在大鵬灣排35，IM703排32 - 越長越強</div>
-                </div>
-                
-                <div class="insight-box">
-                    <div style="font-size: 1.2em; font-weight: bold; color: #ffed4e; margin-bottom: 15px;">吳家慶 - 失衡分佈 (△字型)</div>
-                    <div class="insight-item">游泳+騎車雙王牌，卻排42</div>
-                    <div class="insight-item">跑步(7:38)和過渡(13:18)嚴重拖累</div>
-                    <div class="insight-item">35歲黃金年齡表現不符預期</div>
-                    <div class="insight-item">改進潛力最大 (+5-8分鐘)</div>
-                </div>
-                
-                <div class="insight-box">
-                    <div style="font-size: 1.2em; font-weight: bold; color: #ffed4e; margin-bottom: 15px;">潘美如 - 單項分佈 (└字型)</div>
-                    <div class="insight-item">全隊只有跑步及格</div>
-                    <div class="insight-item">騎車慢5km/h，過渡浪費6分鐘!</div>
-                    <div class="insight-item">排名2因為是分齡女性排名</div>
-                    <div class="insight-item">整體實力最弱，但改進空間最大</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 關鍵洞察 -->
-        <div class="section">
-            <h2>💡 關鍵洞察 & 訓練建議</h2>
+            <h2>🔍 五大核心發現</h2>
             
             <div class="insight-box">
-                <div style="font-size: 1.2em; font-weight: bold; color: #ffed4e; margin-bottom: 15px;">核心發現</div>
-                <div class="insight-item"><strong>短衝 vs 長距離：</strong>葉烜宏的短衝優勢(跑步爆表)在IM703仍然有效，但陳威仲的長距離均衡優勢正逐漸顯現</div>
-                <div class="insight-item"><strong>過渡時間的威力：</strong>葉烜宏(07:51)vs潘美如(14:10)差6分多鐘！過渡流程優化可以帶來奇蹟般的進步</div>
-                <div class="insight-item"><strong>年齡優勢悖論：</strong>35歲吳家慶排42，50歲陳威仲排32 - 說明能力結構比年齡更重要</div>
-                <div class="insight-item"><strong>最被忽視的問題：</strong>吳家慶和潘美如都浪費了太多過渡時間，這比任何單項訓練都有效</div>
+                <div style="font-size: 1.1em; font-weight: bold; color: #ffed4e; margin-bottom: 10px;">1️⃣ 百分位數對比 - 最公平的評估指標</div>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">-59%</div>
+                        <div class="stat-label">潘美如<br>下滑最多</div>
+                    </div>
+                    <div class="stat-item" style="border-left-color: #4ade80;">
+                        <div class="stat-value" style="color: #4ade80;">-8%</div>
+                        <div class="stat-label">陳威仲<br>最穩定 ⭐</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">-11%</div>
+                        <div class="stat-label">吳家慶<br>略有下滑</div>
+                    </div>
+                </div>
             </div>
             
-            <div style="margin-top: 30px;">
-                <h3 style="color: #ffed4e; margin-bottom: 20px;">✅ 訓練優先級建議</h3>
-                
-                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; margin-bottom: 15px;">
-                    <div style="font-weight: bold; color: #4ade80; margin-bottom: 10px;">🎯 吳家慶 - 最大改進潛力 (+5-8分鐘)</div>
-                    <div style="margin-left: 15px; font-size: 0.95em; line-height: 1.8;">
-                        <div>1️⃣ 優先: 跑步訓練 (從7:38→06:30, 省1分鐘)</div>
-                        <div>2️⃣ 其次: 過渡優化 (從13:18→11:30, 省1.5分鐘)</div>
-                        <div>3️⃣ 維持: 游泳+騎車已是王牌</div>
-                    </div>
+            <div class="insight-box">
+                <div style="font-size: 1.1em; font-weight: bold; color: #ffed4e; margin-bottom: 15px;">2️⃣ 短距離精英 ≠ 長距離精英</div>
+                <div class="insight-item">潘美如在短距離是分組前7%（頂級），卻在長距離掉到65%（中等）</div>
+                <div class="insight-item">短距離的爆發優勢無法轉換為長距離的耐力優勢</div>
+            </div>
+            
+            <div class="insight-box">
+                <div style="font-size: 1.1em; font-weight: bold; color: #ffed4e; margin-bottom: 15px;">3️⃣ 均衡訓練最能適應各種距離</div>
+                <div class="insight-item">陳威仲成績增長最小（1.05x）且相對排名最穩定（-8%）</div>
+                <div class="insight-item">說明均衡的三項訓練能有效應對距離變化</div>
+            </div>
+            
+            <div class="insight-box">
+                <div style="font-size: 1.1em; font-weight: bold; color: #ffed4e; margin-bottom: 15px;">4️⃣ 跑步能力是長距離的決定因素</div>
+                <table style="margin-top: 10px;">
+                    <tr>
+                        <th>選手</th>
+                        <th>跑步掉速</th>
+                        <th>相對排名變化</th>
+                    </tr>
+                    <tr>
+                        <td>潘美如</td>
+                        <td style="color: #ff6b6b;"><strong>-34%</strong> 🚨</td>
+                        <td style="color: #ff6b6b;">-59%</td>
+                    </tr>
+                    <tr>
+                        <td>吳家慶</td>
+                        <td>-8%</td>
+                        <td>-11%</td>
+                    </tr>
+                    <tr>
+                        <td>陳威仲</td>
+                        <td style="color: #4ade80;"><strong>-5%</strong> ⭐</td>
+                        <td style="color: #4ade80;">-8%</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="insight-box">
+                <div style="font-size: 1.1em; font-weight: bold; color: #ffed4e; margin-bottom: 15px;">5️⃣ 年齡不是決定因素，訓練體系才是</div>
+                <div class="insight-item">50歲陳威仲(-8%) > 35歲吳家慶(-11%)：年齡更大但表現更穩定</div>
+                <div class="insight-item">說明科學、均衡的訓練體系能超越年齡限制</div>
+            </div>
+        </div>
+        
+        <!-- 訓練建議 -->
+        <div class="section">
+            <h2>🎯 個性化訓練建議</h2>
+            
+            <div class="recommendation">
+                <div class="recommendation-title">潘美如 - 迫切需要改進長距離耐力</div>
+                <table style="margin-top: 15px;">
+                    <tr>
+                        <th>維度</th>
+                        <th>現狀</th>
+                        <th>目標</th>
+                    </tr>
+                    <tr>
+                        <td>相對排名</td>
+                        <td>-59百分位</td>
+                        <td>-20百分位</td>
+                    </tr>
+                    <tr>
+                        <td>跑步配速</td>
+                        <td>08:20/km</td>
+                        <td>07:40/km</td>
+                    </tr>
+                    <tr>
+                        <td>騎車速度</td>
+                        <td>20.96 km/h</td>
+                        <td>22.0 km/h</td>
+                    </tr>
+                </table>
+                <div style="margin-top: 15px; font-size: 0.9em;">
+                    <strong>優先級1：跑步耐力</strong> (省時最多)
+                    <br>優先級2：騎車耐力
+                    <br>優先級3：維持游泳穩定
                 </div>
-                
-                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; margin-bottom: 15px;">
-                    <div style="font-weight: bold; color: #ff6b6b; margin-bottom: 10px;">⚠️ 潘美如 - 最大改進難度 (+8-12分鐘)</div>
-                    <div style="margin-left: 15px; font-size: 0.95em; line-height: 1.8;">
-                        <div>1️⃣ 優先: 騎車訓練 (從25.14→27.5, 省1.5分鐘)</div>
-                        <div>2️⃣ 重點: 過渡優化 (從14:10→11:30, 省2.5分鐘)</div>
-                        <div>3️⃣ 其次: 跑步配速提升</div>
-                    </div>
+            </div>
+            
+            <div class="recommendation" style="background: rgba(74, 222, 128, 0.1); border-color: #4ade80;">
+                <div class="recommendation-title" style="color: #4ade80;">陳威仲 - 維持現有體系，微調優化 ⭐</div>
+                <table style="margin-top: 15px;">
+                    <tr>
+                        <th>維度</th>
+                        <th>現狀</th>
+                        <th>目標</th>
+                    </tr>
+                    <tr>
+                        <td>相對排名</td>
+                        <td style="color: #4ade80;">-8百分位</td>
+                        <td style="color: #4ade80;">維持 (-8%以內)</td>
+                    </tr>
+                    <tr>
+                        <td>跑步配速</td>
+                        <td>07:09/km</td>
+                        <td>07:00/km</td>
+                    </tr>
+                    <tr>
+                        <td>騎車速度</td>
+                        <td>26.4 km/h</td>
+                        <td>26.8 km/h</td>
+                    </tr>
+                </table>
+                <div style="margin-top: 15px; font-size: 0.9em;">
+                    訓練體系已經最優化，重點是微調提升。
                 </div>
-                
-                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; margin-bottom: 15px;">
-                    <div style="font-weight: bold; color: #4ade80; margin-bottom: 10px;">✅ 陳威仲 - 均衡微調 (+3-5分鐘)</div>
-                    <div style="margin-left: 15px; font-size: 0.95em; line-height: 1.8;">
-                        <div>1️⃣ 微調: 跑步訓練 (從6:46→6:30, 省15秒)</div>
-                        <div>2️⃣ 優化: 過渡流程 (從10:25→9:30, 省55秒)</div>
-                        <div>3️⃣ 維持: 游泳+騎車現狀</div>
-                    </div>
-                </div>
-                
-                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px;">
-                    <div style="font-weight: bold; color: #ffed4e; margin-bottom: 10px;">🏆 葉烜宏 - 已達極限 (+2-3分鐘)</div>
-                    <div style="margin-left: 15px; font-size: 0.95em; line-height: 1.8;">
-                        <div>1️⃣ 維持: 跑步和過渡優勢</div>
-                        <div>2️⃣ 微調: 游泳改善20秒</div>
-                        <div>3️⃣ 微調: 騎車改善30秒</div>
-                    </div>
+            </div>
+            
+            <div class="recommendation">
+                <div class="recommendation-title">吳家慶 - 全面均衡發展</div>
+                <table style="margin-top: 15px;">
+                    <tr>
+                        <th>維度</th>
+                        <th>現狀</th>
+                        <th>目標</th>
+                    </tr>
+                    <tr>
+                        <td>相對排名</td>
+                        <td>-11百分位</td>
+                        <td>-5百分位</td>
+                    </tr>
+                    <tr>
+                        <td>騎車速度</td>
+                        <td>24.55 km/h</td>
+                        <td>26.0 km/h</td>
+                    </tr>
+                    <tr>
+                        <td>跑步配速</td>
+                        <td>08:18/km</td>
+                        <td>07:50/km</td>
+                    </tr>
+                </table>
+                <div style="margin-top: 15px; font-size: 0.9em;">
+                    <strong>優先級1：騎車耐力</strong> (掉速最大)
+                    <br>優先級2：跑步改善
                 </div>
             </div>
         </div>
         
-        <footer style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #d4af37; opacity: 0.6;">
-            <p>數據來源：IM703全程鐵人三項賽</p>
-            <p style="margin-top: 5px;">分析日期：2025年12月</p>
+        <!-- 最終結論 -->
+        <div class="section">
+            <h2>🏆 最終結論</h2>
+            
+            <div class="conclusion-box">
+                <div style="font-size: 1.2em; font-weight: bold; color: #ffed4e; margin-bottom: 20px;">修正後的實力排序</div>
+                
+                <div style="margin-bottom: 25px;">
+                    <div style="color: #ffed4e; font-weight: bold; margin-bottom: 10px;">短距離(IM703)競爭力：</div>
+                    <div style="margin-left: 20px; font-size: 0.95em; line-height: 1.8;">
+                        1️⃣ 潘美如 - 精英(前7%) ⭐⭐⭐<br>
+                        2️⃣ 陳威仲 - 中等(前53%) ⭐⭐<br>
+                        3️⃣ 吳家慶 - 中等偏下(前84%)
+                    </div>
+                </div>
+                
+                <div>
+                    <div style="color: #ffed4e; font-weight: bold; margin-bottom: 10px;">長距離(IRONMAN澎湖)競爭力：</div>
+                    <div style="margin-left: 20px; font-size: 0.95em; line-height: 1.8;">
+                        1️⃣ 陳威仲 - 中等(前45%) ⭐⭐ (最穩定)<br>
+                        2️⃣ 潘美如 - 中等(前66%) (從精英掉落)<br>
+                        3️⃣ 吳家慶 - 中等偏下(前73%)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="insight-box">
+                <div style="font-size: 1.1em; font-weight: bold; color: #ffed4e; margin-bottom: 15px;">💫 最深層的洞察</div>
+                <div class="insight-item">距離改變了相對競爭力的排序，但不是絕對實力的排序</div>
+                <div class="insight-item">潘美如的短距離優勢無法延續到長距離</div>
+                <div class="insight-item">陳威仲的均衡體系最能適應各種距離挑戰</div>
+                <div class="insight-item">最成功的鐵人三項選手，是三項能力均衡且穩定的人</div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>✅ 修正版分析 | 基於百分位數的公平比較</p>
+            <p style="margin-top: 5px;">數據來源：IM703全程賽 & IRONMAN澎湖賽事</p>
         </footer>
     </div>
 </body>
